@@ -215,7 +215,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
+            display: none; /* Oculto por defecto */
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -230,6 +230,7 @@
             max-width: 400px;
             text-align: center;
             border: 2px solid #FF8C00;
+            position: relative;
         }
         
         .login-form h2 {
@@ -324,6 +325,46 @@
             font-size: 0.9rem;
         }
         
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #FF8C00;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: #ff4444;
+            transform: scale(1.2);
+        }
+        
+        .admin-login-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FF8C00, #FFA726);
+            color: #1a0f0a;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+        
+        .admin-login-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -341,6 +382,13 @@
             .letreero {
                 max-width: 100%;
             }
+            
+            .admin-login-btn {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -348,6 +396,7 @@
     <!-- Formulario de Login -->
     <div class="login-container" id="loginContainer">
         <div class="login-form">
+            <button class="close-btn" id="closeLoginBtn">&times;</button>
             <h2>Acceso Administrador</h2>
             <form id="loginForm">
                 <input type="text" id="username" placeholder="Usuario" required>
@@ -357,6 +406,9 @@
             </form>
         </div>
     </div>
+    
+    <!-- Botón flotante para login de administrador -->
+    <button class="admin-login-btn" id="adminLoginBtn">Admin Login</button>
     
     <div class="header">
         <img src="https://i.imgur.com/OL9Srrl.png" alt="Letreero Rifa" class="letreero">
@@ -439,6 +491,8 @@
             const errorMessage = document.getElementById('errorMessage');
             const adminPanel = document.getElementById('adminPanel');
             const logoutBtn = document.getElementById('logoutBtn');
+            const adminLoginBtn = document.getElementById('adminLoginBtn');
+            const closeLoginBtn = document.getElementById('closeLoginBtn');
             const numbersGrid = document.getElementById('numbersGrid');
             const message = document.getElementById('message');
             const whatsappBtn = document.getElementById('whatsappBtn');
@@ -468,13 +522,26 @@
             // Función para cerrar sesión
             function logout() {
                 isAdmin = false;
-                loginContainer.style.display = 'flex';
                 adminPanel.style.display = 'none';
                 
                 // Remover evento de doble clic a todos los números
                 document.querySelectorAll('.number').forEach(number => {
                     number.removeEventListener('dblclick', handleDoubleClick);
                 });
+            }
+            
+            // Función para mostrar el formulario de login
+            function showLoginForm() {
+                loginContainer.style.display = 'flex';
+            }
+            
+            // Función para ocultar el formulario de login
+            function hideLoginForm() {
+                loginContainer.style.display = 'none';
+                errorMessage.style.display = 'none';
+                // Limpiar campos del formulario
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
             }
             
             // Manejar el envío del formulario de login
@@ -487,6 +554,19 @@
             
             // Manejar el clic en el botón de cerrar sesión
             logoutBtn.addEventListener('click', logout);
+            
+            // Manejar el clic en el botón de login de administrador
+            adminLoginBtn.addEventListener('click', showLoginForm);
+            
+            // Manejar el clic en la X para cerrar el formulario de login
+            closeLoginBtn.addEventListener('click', hideLoginForm);
+            
+            // Cerrar el formulario de login al hacer clic fuera de él
+            loginContainer.addEventListener('click', function(e) {
+                if (e.target === loginContainer) {
+                    hideLoginForm();
+                }
+            });
             
             // Función para manejar el doble clic en los números
             function handleDoubleClick(e) {
