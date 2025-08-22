@@ -80,6 +80,7 @@
             transition: all 0.2s;
             font-weight: bold;
             color: #FFCCBC; /* Naranja claro */
+            position: relative;
         }
         
         .number:hover {
@@ -95,6 +96,25 @@
             border-color: #000;
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        
+        .number.crossed {
+            background-color: #5a3830; /* Marrón más oscuro */
+            color: #888; /* Gris para indicar que está tachado */
+            text-decoration: line-through;
+            opacity: 0.7;
+            cursor: default; /* Cambiar el cursor para indicar que no es seleccionable */
+        }
+        
+        .number.crossed::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ff4444; /* Rojo para la línea tachada */
+            transform: translateY(-50%);
         }
         
         .video-container {
@@ -187,6 +207,123 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.5);
         }
         
+        /* Estilos para el login */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .login-form {
+            background-color: #2a1810;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 2px solid #FF8C00;
+        }
+        
+        .login-form h2 {
+            color: #FF8C00;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #4a3830;
+            background-color: #3a2820;
+            color: #FFCCBC;
+            font-size: 1rem;
+        }
+        
+        .login-form input:focus {
+            outline: none;
+            border-color: #FF8C00;
+            box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, #FF8C00, #FFA726);
+            color: #1a0f0a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .login-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+        }
+        
+        .error-message {
+            color: #ff4444;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .admin-panel {
+            background-color: #2a1810;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #FF8C00;
+            display: none;
+        }
+        
+        .admin-panel h3 {
+            color: #FF8C00;
+            margin-bottom: 10px;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        
+        .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        
+        .instructions {
+            background-color: #3a2820;
+            color: #FFCCBC;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -208,6 +345,19 @@
     </style>
 </head>
 <body>
+    <!-- Formulario de Login -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-form">
+            <h2>Acceso Administrador</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit" class="login-btn">Iniciar Sesión</button>
+                <div class="error-message" id="errorMessage">Usuario o contraseña incorrectos</div>
+            </form>
+        </div>
+    </div>
+    
     <div class="header">
         <img src="https://i.imgur.com/OL9Srrl.png" alt="Letreero Rifa" class="letreero">
         <h1>Rifa especial para mis clientes de LushiansTV</h1>
@@ -215,6 +365,17 @@
     
     <div class="main-container">
         <div class="numbers-container">
+            <!-- Panel de Administrador -->
+            <div class="admin-panel" id="adminPanel">
+                <h3>Modo Administrador Activado</h3>
+                <p>Puedes tachar números haciendo doble clic sobre ellos</p>
+                <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
+            </div>
+            
+            <div class="instructions">
+                <p><strong>Instrucciones:</strong> Haz clic para seleccionar números</p>
+            </div>
+            
             <div class="numbers-grid" id="numbersGrid">
                 <!-- Los números se generarán con JavaScript -->
             </div>
@@ -257,10 +418,103 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // =============================================
+            // CONFIGURACIÓN PRIVADA - SOLO PARA EL ADMINISTRADOR
+            // =============================================
+            
+            // Credenciales de acceso
+            const ADMIN_USERNAME = "ducketsito";
+            const ADMIN_PASSWORD = "741852963";
+            
+            // Lista de números tachados
+            const PRE_CROSSED_NUMBERS = [];
+            
+            // =============================================
+            // FIN DE LA CONFIGURACIÓN PRIVADA
+            // =============================================
+            
+            // Elementos del DOM
+            const loginContainer = document.getElementById('loginContainer');
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const adminPanel = document.getElementById('adminPanel');
+            const logoutBtn = document.getElementById('logoutBtn');
             const numbersGrid = document.getElementById('numbersGrid');
             const message = document.getElementById('message');
             const whatsappBtn = document.getElementById('whatsappBtn');
+            
+            // Variables de estado
+            let isAdmin = false;
             let selectedNumbers = [];
+            let crossedNumbers = [];
+            
+            // Función para iniciar sesión
+            function login(username, password) {
+                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                    isAdmin = true;
+                    loginContainer.style.display = 'none';
+                    adminPanel.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    
+                    // Agregar evento de doble clic a todos los números
+                    document.querySelectorAll('.number').forEach(number => {
+                        number.addEventListener('dblclick', handleDoubleClick);
+                    });
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            }
+            
+            // Función para cerrar sesión
+            function logout() {
+                isAdmin = false;
+                loginContainer.style.display = 'flex';
+                adminPanel.style.display = 'none';
+                
+                // Remover evento de doble clic a todos los números
+                document.querySelectorAll('.number').forEach(number => {
+                    number.removeEventListener('dblclick', handleDoubleClick);
+                });
+            }
+            
+            // Manejar el envío del formulario de login
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                login(username, password);
+            });
+            
+            // Manejar el clic en el botón de cerrar sesión
+            logoutBtn.addEventListener('click', logout);
+            
+            // Función para manejar el doble clic en los números
+            function handleDoubleClick(e) {
+                e.preventDefault(); // Evitar selección de texto
+                const num = this.dataset.number;
+                
+                if (this.classList.contains('crossed')) {
+                    // Destachar el número
+                    this.classList.remove('crossed');
+                    crossedNumbers = crossedNumbers.filter(n => n !== num);
+                } else {
+                    // Tachar el número
+                    this.classList.add('crossed');
+                    crossedNumbers.push(num);
+                    
+                    // Si estaba seleccionado, quitar la selección
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedNumbers = selectedNumbers.filter(n => n !== num);
+                        
+                        // Actualizar el estado del mensaje y botón
+                        if (selectedNumbers.length === 0) {
+                            message.style.display = 'none';
+                            whatsappBtn.style.display = 'none';
+                        }
+                    }
+                }
+            }
             
             // Generar números del 000 al 999
             for (let i = 0; i < 1000; i++) {
@@ -269,8 +523,15 @@
                 number.textContent = i.toString().padStart(3, '0');
                 number.dataset.number = i;
                 
-                number.addEventListener('click', function() {
+                // Evento para seleccionar números (clic simple)
+                number.addEventListener('click', function(e) {
+                    // Evitar que se dispare el doble clic
+                    if (e.detail > 1) return;
+                    
                     const num = this.dataset.number;
+                    
+                    // Si está tachado, no se puede seleccionar
+                    if (this.classList.contains('crossed')) return;
                     
                     if (this.classList.contains('selected')) {
                         this.classList.remove('selected');
@@ -299,8 +560,18 @@
                 
                 numbersGrid.appendChild(number);
             }
+            
+            // Aplicar números pre-tachados
+            if (PRE_CROSSED_NUMBERS.length > 0) {
+                PRE_CROSSED_NUMBERS.forEach(numStr => {
+                    const numElement = document.querySelector(`[data-number="${parseInt(numStr)}"]`);
+                    if (numElement) {
+                        numElement.classList.add('crossed');
+                        crossedNumbers.push(numStr);
+                    }
+                });
+            }
         });
     </script>
-	<iframe width="402" height="346" frameborder="0" scrolling="no" src="https://1drv.ms/x/c/49f5fa6abd5d5f8d/IQTZ881enlyLTZg90H50kfNAARPi-ZjM3C_S6J75SHbnn9M?wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True"></iframe>
 </body>
 </html>
