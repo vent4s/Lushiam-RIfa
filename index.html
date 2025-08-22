@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifa lushiam Stream</title>
+    <title>Rifa A mis clientes</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
         
         body {
-            background-color: #3E2723; /* Marrón oscuro */
+            background-color: #1a0f0a; /* Marrón muy oscuro, casi negro */
             color: #FFCCBC; /* Naranja claro para texto */
             padding: 20px;
         }
@@ -21,26 +21,29 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            background-color: #4E342E; /* Marrón más claro */
+            background-color: #2a1810; /* Marrón oscuro */
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
         
-        .logo {
-            max-width: 200px;
+        .letreero {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
             margin-bottom: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            border: 4px solid #FF8C00; /* Borde naranja más grueso */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         h1 {
             font-size: 3.5rem;
-            color: #000;
-            background: linear-gradient(to right, #FF8C00, #FFA726); /* Degradado naranja */
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow: none;
+            color: #FFFFFF; /* Blanco */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 10px;
             letter-spacing: 2px;
             font-weight: bold;
@@ -54,10 +57,10 @@
         }
         
         .numbers-container {
-            background-color: #4E342E; /* Marrón más claro */
+            background-color: #2a1810; /* Marrón oscuro */
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
         
         .numbers-grid {
@@ -68,8 +71,8 @@
         }
         
         .number {
-            background-color: #5D4037; /* Marrón medio */
-            border: 1px solid #795548; /* Marrón claro */
+            background-color: #3a2820; /* Marrón medio oscuro */
+            border: 1px solid #4a3830; /* Marrón claro */
             border-radius: 4px;
             padding: 8px;
             text-align: center;
@@ -81,24 +84,24 @@
         
         .number:hover {
             background-color: #FF8C00; /* Naranja */
-            color: #3E2723; /* Marrón oscuro */
+            color: #1a0f0a; /* Marrón muy oscuro */
             transform: scale(1.05);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
         .number.selected {
             background-color: #FF8C00; /* Naranja */
-            color: #3E2723; /* Marrón oscuro */
+            color: #1a0f0a; /* Marrón muy oscuro */
             border-color: #000;
             font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
         
         .video-container {
-            background-color: #4E342E; /* Marrón más claro */
+            background-color: #2a1810; /* Marrón oscuro */
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             text-align: center;
         }
         
@@ -108,17 +111,18 @@
             font-size: 1.5rem;
         }
         
-        .video-container iframe {
+        .video-container video {
             width: 100%;
-            height: 300px;
-            border: none;
+            max-width: 800px;
+            height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            border: 2px solid #FF8C00; /* Borde naranja */
         }
         
         .message {
             background: linear-gradient(135deg, #FF8C00, #FFA726); /* Degradado naranja */
-            color: #3E2723; /* Marrón oscuro */
+            color: #1a0f0a; /* Marrón muy oscuro */
             padding: 15px;
             border-radius: 8px;
             text-align: center;
@@ -126,12 +130,12 @@
             font-size: 1.2rem;
             display: none;
             animation: fadeIn 0.5s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
             font-weight: bold;
         }
         
         .message a {
-            color: #3E2723; /* Marrón oscuro */
+            color: #1a0f0a; /* Marrón muy oscuro */
             font-weight: bold;
             text-decoration: none;
         }
@@ -152,14 +156,14 @@
             height: 150px;
             object-fit: cover;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid #5D4037; /* Marrón medio */
+            border: 2px solid #3a2820; /* Marrón medio oscuro */
         }
         
         .images-container img:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
             border-color: #FF8C00; /* Naranja */
         }
         
@@ -175,12 +179,12 @@
             margin-top: 15px;
             display: none;
             transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
         
         .whatsapp-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5);
         }
         
         @keyframes fadeIn {
@@ -196,13 +200,17 @@
             .numbers-grid {
                 grid-template-columns: repeat(5, 1fr);
             }
+            
+            .letreero {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="https://via.placeholder.com/200x100?text=Logo+Lushiam" alt="Logo Lushiam Stream" class="logo">
-        <h1>lushiam Stream</h1>
+        <img src="https://i.imgur.com/OL9Srrl.png" alt="Letreero Rifa" class="letreero">
+        <h1>Rifa A mis clientes</h1>
     </div>
     
     <div class="main-container">
@@ -226,22 +234,25 @@
         
         <div class="video-container">
             <h3>Video Promocional</h3>
-            <iframe src="https://i.imgur.com/lGfWA3C.mp4" allowfullscreen></iframe>
+            <video controls autoplay muted loop>
+                <source src="https://i.imgur.com/lGfWA3C.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
         </div>
     </div>
     
     <div class="images-container">
         <!-- 10 imágenes de Imgur -->
-        <img src="https://i.imgur.com/5pV1z8L.jpeg" alt="Imagen 1">
-        <img src="https://i.imgur.com/Q8z0s5g.jpeg" alt="Imagen 2">
-        <img src="https://i.imgur.com/3qV1z8L.jpeg" alt="Imagen 3">
-        <img src="https://i.imgur.com/6pV1z8L.jpeg" alt="Imagen 4">
-        <img src="https://i.imgur.com/9pV1z8L.jpeg" alt="Imagen 5">
-        <img src="https://i.imgur.com/2pV1z8L.jpeg" alt="Imagen 6">
-        <img src="https://i.imgur.com/4pV1z8L.jpeg" alt="Imagen 7">
-        <img src="https://i.imgur.com/7pV1z8L.jpeg" alt="Imagen 8">
-        <img src="https://i.imgur.com/1pV1z8L.jpeg" alt="Imagen 9">
-        <img src="https://i.imgur.com/8pV1z8L.jpeg" alt="Imagen 10">
+        <img src="https://i.imgur.com/TgJoTOh.jpeg" alt="Imagen 1">
+        <img src="https://i.imgur.com/luU27ao.png" alt="Imagen 2">
+        <img src="https://i.imgur.com/87u3UWX.jpeg" alt="Imagen 3">
+        <img src="https://i.imgur.com/N6cFp7F.png" alt="Imagen 4">
+        <img src="https://i.imgur.com/SSyl354.png" alt="Imagen 5">
+        <img src="https://i.imgur.com/kTCI3ue.jpeg" alt="Imagen 6">
+        <img src="https://i.imgur.com/boy7oZI.jpeg" alt="Imagen 7">
+        <img src="https://i.imgur.com/kFgIHG5.png" alt="Imagen 8">
+        <img src="https://i.imgur.com/NKnvvx5.jpeg" alt="Imagen 9">
+        <img src="https://i.imgur.com/M59lR9h.png" alt="Imagen 10">
     </div>
     
     <script>
